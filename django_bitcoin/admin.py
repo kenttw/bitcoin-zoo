@@ -53,7 +53,10 @@ admin.site.register(models.BitcoinAddress, BitcoinAddressAdmin)
 admin.site.register(models.Payment, PaymentAdmin)
 admin.site.register(models.WalletTransaction, WalletTransactionAdmin)
 admin.site.register(models.Wallet, WalletAdmin)
-admin.site.register(models.Profile)
-admin.site.register(models.Escrow)
+admin.site.register(models.DepositTransaction)
+admin.site.register(models.OutgoingTransaction)
+
+# admin.site.register(models.Profile)
+# admin.site.register(models.Escrow)
 # EOF
 

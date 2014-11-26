@@ -274,7 +274,7 @@ class BitcoinAddress(models.Model):
         verbose_name_plural = 'Bitcoin addresses'
 
     def query_bitcoind(self, minconf=settings.BITCOIN_MINIMUM_CONFIRMATIONS, triggered_tx=None):
-        raise Exception("Deprecated")
+#         raise Exception("Deprecated")
         with CacheLock('query_bitcoind'):
             r = bitcoind.total_received(self.address, minconf=minconf)
 
@@ -967,13 +967,13 @@ class Wallet(models.Model):
 
 ### Maybe in the future
 
-class Profile(models.Model):
-    wallet = ForeignKey(Wallet)
-    outgoing_bitcoin_address = CharField(max_length=255)
-
-class Escrow(models.Model):
-    wallet = ForeignKey(Wallet)
-    buyer_happy = BooleanField(default=False)
+# class Profile(models.Model):
+#     wallet = ForeignKey(Wallet)
+#     outgoing_bitcoin_address = CharField(max_length=255)
+# 
+# class Escrow(models.Model):
+#     wallet = ForeignKey(Wallet)
+#     buyer_happy = BooleanField(default=False)
 
 
 # class FiatWalletTransaction(models.Model):
