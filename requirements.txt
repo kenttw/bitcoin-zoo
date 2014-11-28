@@ -16,3 +16,4 @@ python-memcached==1.53
 readline==6.2.4.1
 six==1.4.1
 wsgiref==0.1.2
+python-twitter

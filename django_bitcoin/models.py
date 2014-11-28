@@ -778,28 +778,28 @@ class Wallet(models.Model):
                 outgoing_transaction=outgoing_transaction,
                 description=description)
             process_outgoing_transactions.apply_async((), countdown=(expires_seconds+1))
-            # try:
-            #     result = bitcoind.send(address, amount)
-            # except jsonrpc.JSONRPCException:
-            #     bwt.delete()
-            #     updated2 = Wallet.objects.filter(Q(id=self.id) & Q(last_balance=new_balance)).update(last_balance=avail)
-            #     raise
+            try:
+                result = bitcoind.send(address, amount)
+            except jsonrpc.JSONRPCException:
+                bwt.delete()
+                updated2 = Wallet.objects.filter(Q(id=self.id) & Q(last_balance=new_balance)).update(last_balance=avail)
+                raise
             self.transaction_counter = self.transaction_counter+1
             self.last_balance = new_balance
 
             # check if a transaction fee exists, and deduct it from the wallet
             # TODO: because fee can't be known beforehand, can result in negative wallet balance.
             # currently isn't much of a issue, but might be in the future, depending of the application
-            # transaction = bitcoind.gettransaction(result)
-            # fee_transaction = None
-            # total_amount = amount
-            # if Decimal(transaction['fee']) < Decimal(0):
-            #     fee_transaction = WalletTransaction.objects.create(
-            #         amount=Decimal(transaction['fee']) * Decimal(-1),
-            #         from_wallet=self)
-            #     total_amount += fee_transaction.amount
-            #     updated = Wallet.objects.filter(Q(id=self.id))\
-            #         .update(last_balance=new_balance-fee_transaction.amount)
+            transaction = bitcoind.gettransaction(result)
+            fee_transaction = None
+            total_amount = amount
+            if Decimal(transaction['fee']) < Decimal(0):
+                fee_transaction = WalletTransaction.objects.create(
+                    amount=Decimal(transaction['fee']) * Decimal(-1),
+                    from_wallet=self)
+                total_amount += fee_transaction.amount
+                updated = Wallet.objects.filter(Q(id=self.id))\
+                    .update(last_balance=new_balance-fee_transaction.amount)
             if settings.BITCOIN_TRANSACTION_SIGNALING:
                 balance_changed.send(sender=self,
                     changed=(Decimal(-1) * amount), transaction=bwt)

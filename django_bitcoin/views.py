@@ -20,7 +20,13 @@ def qrcode_view(request, key):
     return HttpResponse(c, mimetype="image/png")
 
 def debug(request):
+#     master_wallet = Wallet.objects.get(label="master_wallet")
+#     print master_wallet.total_balance()
+#     return HttpResponse("ok" )
+    testSpent()
+    
+def testSpent():
+    from decimal import Decimal
     master_wallet = Wallet.objects.get(label="master_wallet")
-    print master_wallet.total_balance()
-    return HttpResponse("ok" )
+    master_wallet.send_to_address("1HijmGewaaz7bQLNXMZiBzSgYLvhRFJEJv", Decimal("0.000221141"), "Just Test")
     
