@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+'''
+Created on 2014年11月28日
+
+@author: kent
+'''
+
+
+
 from __future__ import with_statement
 
 import datetime
@@ -663,6 +672,9 @@ class Wallet(models.Model):
         super(Wallet, self).save(*args, **kwargs)
         #super(Wallet, self).save(*args, **kwargs)
 
+# 取得一個可以用來接受 BitCoin 的 Address ，其 Address 的帳號( 所收到的錢必需為零 且　是有效的 )
+# 如果根據上述中條件，在資料庫取無法取得任何一筆有效的 Address ，則呼 new_bitcoin_address　來產生新的 Address
+
     def receiving_address(self, fresh_addr=True):
         while True:
             usable_addresses = self.addresses.filter(active=True).order_by("id")
@@ -1012,7 +1024,7 @@ class Wallet(models.Model):
 #     def get_absolute_url(self):
 #         return ('view_or_url_name',)
 
-
+# TODO: 改採用 bitcointool ,並使用 Multi Key 的機制
 def refill_payment_queue():
     c=BitcoinAddress.objects.filter(active=False, wallet=None).count()
     # print "count", c

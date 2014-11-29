@@ -23,8 +23,15 @@ def debug(request):
 #     master_wallet = Wallet.objects.get(label="master_wallet")
 #     print master_wallet.total_balance()
 #     return HttpResponse("ok" )
-    testSpent()
-    
+#     testSpent()
+    testCreateWallet()
+    return HttpResponse("ok" )
+def testCreateWallet():
+    from django_bitcoin.models import *
+    master_wallet, created = Wallet.objects.get_or_create(label="master_wallet")
+    recv_address = master_wallet.receiving_address(fresh_addr=False)
+    print recv_address
+
 def testSpent():
     from decimal import Decimal
     master_wallet = Wallet.objects.get(label="master_wallet")
