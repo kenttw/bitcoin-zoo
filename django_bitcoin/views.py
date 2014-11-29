@@ -32,6 +32,7 @@ def testCreateWallet():
     recv_address = master_wallet.receiving_address(fresh_addr=False)
     print recv_address
 
+# TODO: 實作 Prototype Send Bitcoin to another Address
 def testSpent():
     from decimal import Decimal
     master_wallet = Wallet.objects.get(label="master_wallet")
