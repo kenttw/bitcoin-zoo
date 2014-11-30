@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
-
+from django_bitcoin.models import Wallet
 
 # import django_bitcoin
 admin.autodiscover()
@@ -20,9 +20,24 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
+# Serializers define the API representation.
+class WalletSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Wallet
+        fields = ('created_at', 'updated_at', 'label', 'transaction_counter')
+
+# ViewSets define the view behavior.
+class WalletViewSet(viewsets.ModelViewSet):
+    queryset = Wallet.objects.all()
+    serializer_class = WalletSerializer
+
+
+
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'wallets', WalletViewSet)
+
 
 
 
