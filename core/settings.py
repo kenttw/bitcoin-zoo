@@ -123,7 +123,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django_extensions',
     'south',
-    'django_bitcoin'
+    'django_bitcoin',
+    'rest_framework',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -159,6 +160,15 @@ LOGGING = {
 
 # Don't try to do asynchronous transaction processing
 CELERY_ALWAYS_EAGER = True
+
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 # Disable some nagging
 import warnings

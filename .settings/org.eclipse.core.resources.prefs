@@ -2,4 +2,5 @@ eclipse.preferences.version=1
 encoding//django_bitcoin/admin.py=utf-8
 encoding//django_bitcoin/models.py=utf-8
 encoding//django_bitcoin/utils.py=utf-8
+encoding//django_bitcoin/views.py=utf-8
 encoding//test/tasks.py=utf-8

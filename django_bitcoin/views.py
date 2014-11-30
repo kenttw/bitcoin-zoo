@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+'''
+Created on 2014年11月28日
+
+@author: kent
+'''
 # Create your views here.
 from django.http import HttpResponseRedirect, HttpResponse
 from django.core.cache import cache
@@ -24,13 +30,22 @@ def debug(request):
 #     print master_wallet.total_balance()
 #     return HttpResponse("ok" )
 #     testSpent()
-    testCreateWallet()
+#     testCreateWallet()
+ 
+    testTotalBalance()
     return HttpResponse("ok" )
 def testCreateWallet():
     from django_bitcoin.models import *
     master_wallet, created = Wallet.objects.get_or_create(label="master_wallet")
     recv_address = master_wallet.receiving_address(fresh_addr=False)
     print recv_address
+
+# TODO: Check Total Balance , 目前發閱 bitcoon_address 物件的 migrate to transation 欄位作用不明
+def testTotalBalance():
+    from django_bitcoin.models import Wallet
+    master_wallet = Wallet.objects.get(label="master_wallet")
+    print master_wallet.total_balance()
+    
 
 # TODO: 實作 Prototype Send Bitcoin to another Address
 def testSpent():
