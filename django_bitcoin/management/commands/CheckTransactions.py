@@ -1,7 +1,7 @@
 from django.core.management.base import NoArgsCommand
 from time import sleep, time
 from django_bitcoin.utils import bitcoind
-from django_bitcoin.models import BitcoinAddress, DepositTransaction
+from django_bitcoin.models import BitcoinAddress, DepositTransaction, Wallet
 from django.conf import settings
 from decimal import Decimal
 import datetime
@@ -33,6 +33,9 @@ class Command(NoArgsCommand):
                     if dps.count() == 0:
                         try:
                             ba = BitcoinAddress.objects.get(address=t['address'], active=True, wallet__isnull=False)
+                            
+                            newdep = DepositTransaction(wallet=ba.wallet , address=ba,amount=Decimal(str(t[u'amount'])))
+                            newdep.save()
                             if ba:
                                 ba.query_bitcoind(0, triggered_tx=t[u'txid'])
                             last_check_time = int(t['time'])
