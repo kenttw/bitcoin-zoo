@@ -125,6 +125,7 @@ INSTALLED_APPS = (
     'south',
     'django_bitcoin',
     'rest_framework',
+    'bitcoin_api',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

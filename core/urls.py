@@ -1,35 +1,11 @@
 from django.conf.urls import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
-from django_bitcoin.models import Wallet
+from rest_framework import routers
+from bitcoin_api.models import UserViewSet, WalletViewSet
 
 # import django_bitcoin
 admin.autodiscover()
-
-
-# Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'is_staff')
-
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-# Serializers define the API representation.
-class WalletSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Wallet
-        fields = ('created_at', 'updated_at', 'label', 'transaction_counter')
-
-# ViewSets define the view behavior.
-class WalletViewSet(viewsets.ModelViewSet):
-    queryset = Wallet.objects.all()
-    serializer_class = WalletSerializer
 
 
 

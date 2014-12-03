@@ -20,3 +20,4 @@ python-twitter
 djangorestframework
 markdown
 django-filter
+qrcode
