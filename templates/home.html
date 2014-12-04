@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% block body %}
+    <!-- a headline -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <ul class="nav nav-pills pull-right">
+
+            {% if user.is_authenticated %}
+                <li role='presentation'><a href=''><span class="badge">hello {{ user.get_username }}</span></a></li>
+                <li role='presentation'><a href='/member/singout'>sing out</a></li>
+            {% else %}
+                <li class="btn btn-primary" data-toggle="modal" data-target=".pop-signin">
+                    <span>sign in</span>
+                </li>
+                <li class="btn btn-primary" data-toggle="modal" data-target=".pop-signup">
+                    <span>sign up</span>
+                </li>
+            {% endif %}
+
+
+            <li role="presentation"><a href="#">About</a></li>
+
+        </ul>
+    </nav>
+    <!-- end headline -->
+
+
+    <!-- a sign in pop-up window -->
+    <div class="modal fade pop-signin" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Sign in</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- The form is placed inside the body of modal -->
+                    <form action='/member/signin/' id="searchForm" method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">username</label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" name="username" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">password</label>
+                            <div class="col-md-5">
+                                <input type="password" class="form-control" name="password" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-5 col-md-offset-3">
+                                <button type="submit" class="btn btn-primary">Go</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end sign in pop-up window -->
+
+    <!-- sing up pop-up window -->
+
+    <div class="modal fade pop-signup" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Sign up</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- The form is placed inside the body of modal -->
+                    <form action='/member/signup/' id="searchForm" method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">username</label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" name="username" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">E-mail</label>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" name="email" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">password1</label>
+                            <div class="col-md-5">
+                                <input type="password" class="form-control" name="password1" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label">password2</label>
+                            <div class="col-md-5">
+                                <input type="password" class="form-control" name="password2" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-5 col-md-offset-3">
+                                <button type="submit" class="btn btn-primary">Go</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- end sing up pop-up window -->
+
+
+    <div class="jumbotron">
+        <div class="container">
+            <h1> an simple interface for test bitcoin</h1>
+            it's outline can be changed easily.
+        </div>
+    </div>
+
+
+    <script>
+        function sendToken(data){
+            $.ajax({
+                url: '/member/testview/',
+                type: 'GET',
+                dataType: 'json',
+                headers: {
+                    Authorization: 'JWT '+data.token
+                },
+                success: function(){
+                    console.log('ok?');
+                }
+            });
+        }
+        $('#jwt_link').on('click', function(){
+            console.log('click');
+            $.ajax({
+                url: '/member/api-token-auth/',
+                type: 'POST',
+                dataType: 'json',
+                data: {'username': 'shopping', 'password': 'shopping'},
+                success: function(data){
+                    console.log(data);
+                    sendToken(data);
+                }
+            });
+        });
+    </script>
+{% endblock %}
+{% block content %}
+{% endblock %}

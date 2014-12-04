@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <title>{% block title %}Userena{% endblock %}</title>
+        {% block meta %}{% endblock %}
+        {% block load_script %}
+            {% load staticfiles %}
+            <script src='{% static "js/jquery.js" %}'></script>
+            <script src='{% static "js/bootstrap.js" %}'></script>
+            <link rel="stylesheet" type="text/css" href="{% static "css/bootstrap.min.css" %}">
+        {% endblock %}
+    </head>
+    <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}{% endblock %}">
+
+    <div id="body">
+
+
+        {% block body %}
+            <div class="container">
+                {% block content_title %}{% endblock %}
+                {% block content %}{% endblock %}
+            </div>
+        {% endblock %}
+    </div>
+</body>
+</html>

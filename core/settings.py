@@ -1,4 +1,9 @@
 # Django settings for core project.
+import datetime
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+
+
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -125,6 +130,10 @@ INSTALLED_APPS = (
     'south',
     'django_bitcoin',
     'rest_framework',
+    'userena',
+    'guardian',
+    'easy_thumbnails',
+    'member',
     'bitcoin_api',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
@@ -163,13 +172,65 @@ LOGGING = {
 CELERY_ALWAYS_EAGER = True
 
 
+# adds for userena
+AUTHENTICATION_BACKENDS = (
+    'userena.backends.UserenaAuthenticationBackend',
+    'guardian.backends.ObjectPermissionBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+# asked by the guardian
+ANONYMOUS_USER_ID = -1
+
+
+# UserenaProfile
+AUTH_PROFILE_MODULE = 'member.MyProfile'
+
+# turn on/off the email authentication
+USERENA_ACTIVATION_REQUIRED = False
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# use gmail smtp server
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+
+
+
+
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
 }
+
+
+# add statics dir and templates dir
+# django will use these path to search files
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
+
+
+# set json web token authentication expiration time
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2)
+}
+
+
+
 
 # Disable some nagging
 import warnings

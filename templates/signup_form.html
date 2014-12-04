@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "Signup" %} wtf{% endblock %}
+{% block content %}
+    <div class="panel panel-primary">
+        <div class="panel-heading">Sign up</div>
+        <div class="panel-body">
+            <form action='' method="post" class="form-horizontal">
+                {% csrf_token %}
+
+                    {{ form.non_field_errors }}
+                    {% for field in form %}
+                        {{ field.errors }}
+                    {% comment %} Displaying checkboxes differently {% endcomment %}
+                    {% if field.name == 'tos' %}
+                        <p class="checkbox">
+                        <label for="id_{{ field.name }}">{{ field }} {{ field.label }}</label>
+                        </p>
+                    {% else %}
+                        <div class="form-group">
+                            <div class='col-md-3'>
+                                {{ field.label_tag }}
+                            </div>
+                            <div class="col-md-3">
+                                {{ field }}
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% endfor %}
+
+                <input class="btn btn-info" type="submit" value="{% trans "Signup"%}" />
+        </form>
+    </div>
+</div>
+{% endblock %}
