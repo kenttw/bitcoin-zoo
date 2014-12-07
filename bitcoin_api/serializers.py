@@ -2,6 +2,7 @@ from django.db import models
 from rest_framework import routers, serializers, viewsets
 from django_bitcoin.models import Wallet ,BitcoinAddress
 from django.contrib.auth.models import User
+import datetime
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -12,16 +13,26 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class WalletSerializer(serializers.HyperlinkedModelSerializer):
-    def create(self, validated_attrs):
-        return Wallet.objects.create(label="master_wallet")    
+class WalletCreateSerializer(serializers.ModelSerializer):
+
+# TODO: Check This Accout 是否為 KYC 合法，才能產生新的 Wallet ，否的話就回傳錯誤
+#     def restore_object(self, attrs, instance=None):
+#         """
+#         Instantiate a new User instance.
+#         """
+#         assert instance is None, 'Cannot update users with CreateUserSerializer'                                
+#         master_wallet = Wallet(label=attrs['label'], created_at=datetime.datetime.now() , updated_at = datetime.datetime.now())
+#         return master_wallet
     class Meta:
         model = Wallet
-        fields = ('created_at', 'updated_at', 'label', 'transaction_counter')
+        fields = ('label', )
 
-class WalletViewSet(viewsets.ModelViewSet):
-    queryset = Wallet.objects.all()
-    serializer_class = WalletSerializer
+class WalletSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Wallet
+        fields = ('label', )
+    
+
 
     
 class BitcoinAddressSerializer(serializers.HyperlinkedModelSerializer):
