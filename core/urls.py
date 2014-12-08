@@ -1,10 +1,6 @@
 from django.conf.urls import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
-from rest_framework import routers
-from bitcoin_api.serializers import UserViewSet, WalletViewSet, BitcoinAddressViewSet
-import bitcoin_api
-import views
 # import django_bitcoin
 admin.autodiscover()
 
@@ -20,10 +16,11 @@ urlpatterns = patterns(
     url(r'^admin/', include(admin.site.urls)),
     url(r'^bitcoin/', include('django_bitcoin.urls')),
     url(r'^api/', include('bitcoin_api.urls')),
+    url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # overwirtte some views of userena
-    url(r'^member/', include('member.urls')),
-    url(r'^member/', include('userena.urls')),
-    url(r'^home/', views.home),
+#     url(r'^member/', include('member.urls')),
+#     url(r'^member/', include('userena.urls')),
+#     url(r'^home/', views.home),
 
 )

@@ -674,7 +674,7 @@ class Wallet(models.Model):
 # 取得一個可以用來接受 BitCoin 的 Address ，其 Address 的帳號( 所收到的錢必需為零 且　是有效的 )
 # 如果根據上述中條件，在資料庫取無法取得任何一筆有效的 Address ，則呼 new_bitcoin_address　來產生新的 Address
 
-    def receiving_address(self, fresh_addr=True):
+    def receiving_address(self, fresh_addr=True , isSave=False):
         while True:
             usable_addresses = self.addresses.filter(active=True).order_by("id")
             if fresh_addr:
@@ -682,9 +682,10 @@ class Wallet(models.Model):
             if usable_addresses.count():
                 return usable_addresses[0].address
             addr = new_bitcoin_address()
-            updated = BitcoinAddress.objects.select_for_update().filter(Q(id=addr.id) & Q(active=True) & Q(least_received__lte=0) & Q(wallet__isnull=True))\
-                          .update(active=True, wallet=self)
-            print "addr_id", addr.id, updated
+            if isSave == False :
+                updated = BitcoinAddress.objects.select_for_update().filter(Q(id=addr.id) & Q(active=True) & Q(least_received__lte=0) & Q(wallet__isnull=True))\
+                              .update(active=True, wallet=self)
+                print "addr_id", addr.id, updated
             # db_transaction.commit()
             if updated:
                 return addr.address

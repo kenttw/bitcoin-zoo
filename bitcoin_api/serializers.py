@@ -1,17 +1,10 @@
+# -*- coding: utf-8 -*-
+
 from django.db import models
 from rest_framework import routers, serializers, viewsets
 from django_bitcoin.models import Wallet ,BitcoinAddress
 from django.contrib.auth.models import User
 import datetime
-
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'is_staff')
-
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 class WalletCreateSerializer(serializers.ModelSerializer):
 
@@ -30,10 +23,8 @@ class WalletCreateSerializer(serializers.ModelSerializer):
 class WalletSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wallet
-        fields = ('label', )
-    
-
-
+        fields = ('id','created_at','transaction_counter','last_balance')
+        write_only_fields = ('label',)
     
 class BitcoinAddressSerializer(serializers.HyperlinkedModelSerializer):
     def create(self, validated_attrs):

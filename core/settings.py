@@ -130,10 +130,11 @@ INSTALLED_APPS = (
     'south',
     'django_bitcoin',
     'rest_framework',
-    'userena',
-    'guardian',
-    'easy_thumbnails',
-    'member',
+    'rest_framework_swagger',
+#     'userena',
+#     'guardian',
+#     'easy_thumbnails',
+#     'member',
     'bitcoin_api',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
@@ -202,9 +203,9 @@ EMAIL_HOST_PASSWORD = ''
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
