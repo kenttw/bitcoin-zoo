@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//bitcoin_api/serializers.py=utf-8
 encoding//bitcoin_api/urls.py=utf-8
+encoding//bitcoin_task/celery.py=utf-8
+encoding//bitcoin_task/tasks.py=utf-8
 encoding//django_bitcoin/admin.py=utf-8
 encoding//django_bitcoin/models.py=utf-8
 encoding//django_bitcoin/utils.py=utf-8
