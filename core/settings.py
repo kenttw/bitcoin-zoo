@@ -136,6 +136,9 @@ INSTALLED_APPS = (
 #     'easy_thumbnails',
 #     'member',
     'bitcoin_api',
+    'bitcoin_task',
+#     'djcelery',
+
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
@@ -229,6 +232,7 @@ TEMPLATE_DIRS = (
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=2)
 }
+
 
 
 
