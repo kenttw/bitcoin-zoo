@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from bitcoin_api.serializers import WalletSerializer
+from bitcoin_api.serializers import WalletSerializer ,WalletCreateSerializer
 from django_bitcoin.models import Wallet
 from django.http import Http404
 from rest_framework.views import APIView 
@@ -22,7 +22,7 @@ class WalletInfoView(APIView):
 
 class WalletCreateView(generics.CreateAPIView):
     model = Wallet
-    serializer_class = WalletSerializer
+    serializer_class = WalletCreateSerializer
     permission_classes = [
         permissions.AllowAny
     ]

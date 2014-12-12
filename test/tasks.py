@@ -7,7 +7,7 @@ Created on 2014年11月28日
 from celery import Celery
 from celery import task
 
-app = Celery('tasks', broker='redis://etukent.ddns.net/')
+app = Celery('tasks', broker='redis://localhost/')
 
 @app.task
 def add(x, y):
