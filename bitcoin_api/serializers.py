@@ -21,8 +21,8 @@ class WalletCreateSerializer(serializers.ModelSerializer):
         return master_wallet
     class Meta:
         model = Wallet
+        write_only_fields = ('label',)
         fields = ('label','id' ,'last_balance')
-        read_only_fields = ('id' ,'last_balance')
 
 class WalletSerializer(serializers.ModelSerializer):
     class Meta:

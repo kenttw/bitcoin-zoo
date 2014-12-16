@@ -19,7 +19,7 @@ class WalletInfoView(APIView):
 #         pass
 #     def delete(self, request, pk):
 #         pass
-
+# curl -X POST http://localhost:8000/api/wallet/ -d  '{"label":"fsdfdf"}'
 class WalletCreateView(generics.CreateAPIView):
     model = Wallet
     serializer_class = WalletCreateSerializer

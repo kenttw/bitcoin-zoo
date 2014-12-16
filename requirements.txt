@@ -30,3 +30,5 @@ six==1.8.0
 South==1.0.1
 Werkzeug==0.9.4
 wsgiref==0.1.2
+django-celery
+openpyxl
