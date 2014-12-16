@@ -31,6 +31,7 @@ from django.utils.translation import ugettext as _
 import django.dispatch
 
 import jsonrpc
+from bitcoin import random_key , privtopub , mk_multisig_script ,scriptaddr
 
 from BCAddressField import is_valid_btc_address
 
@@ -269,7 +270,11 @@ def process_outgoing_transactions():
 
 class BitcoinAddress(models.Model):
     address = models.CharField(max_length=50, unique=True)
+    pkey1 = models.CharField(max_length=50)
+    pkey2 = models.CharField(max_length=50)
+    pkey3 = models.CharField(max_length=50)
     created_at = models.DateTimeField(default=datetime.datetime.now)
+    user = models.CharField(max_length=50)
     active = models.BooleanField(default=False)
     least_received = models.DecimalField(max_digits=16, decimal_places=8, default=Decimal(0))
     least_received_confirmed = models.DecimalField(max_digits=16, decimal_places=8, default=Decimal(0))
@@ -1030,8 +1035,16 @@ def refill_payment_queue():
     # print "count", c
     if settings.BITCOIN_ADDRESS_BUFFER_SIZE>c:
         for i in range(0,settings.BITCOIN_ADDRESS_BUFFER_SIZE-c):
-            BitcoinAddress.objects.create(address = bitcoind.create_address(), active=False)
-
+            if False :
+                BitcoinAddress.objects.create(address = bitcoind.create_address(), active=False)
+            else :
+                random_keys = [ random_key() for i in range(3)]
+                pubs = [ privtopub(priv) for priv in random_keys ]
+                # addrs = [ pubtoaddr(pub) for pub in pubs ]
+                script = mk_multisig_script(pubs, 2, 3) # 2 0f 3 multisig script
+                tx_address = scriptaddr(script)
+#                 addrestxt = 
+                BitcoinAddress.objects.create(address = tx_address, active=False)
 
 def update_payments():
     if not cache.get('last_full_check'):
