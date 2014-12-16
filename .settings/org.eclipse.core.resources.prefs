@@ -6,6 +6,7 @@ encoding//bitcoin_task/tasks.py=utf-8
 encoding//bitcoin_task/views.py=utf-8
 encoding//core/celery.py=utf-8
 encoding//django_bitcoin/admin.py=utf-8
+encoding//django_bitcoin/migrations/0002_auto__del_field_bitcoinaddress_pkey4.py=utf-8
 encoding//django_bitcoin/models.py=utf-8
 encoding//django_bitcoin/utils.py=utf-8
 encoding//django_bitcoin/views.py=utf-8

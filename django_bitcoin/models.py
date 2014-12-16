@@ -275,7 +275,7 @@ class BitcoinAddress(models.Model):
     pkey1 = models.CharField(max_length=50 , null=False)
     pkey2 = models.CharField(max_length=50 , null=False)
     pkey3 = models.CharField(max_length=50 , null=False)
-    pkey4 = models.CharField(max_length=50 , default='') 
+#     pkey4 = models.CharField(max_length=50 , default='') 
 
     created_at = models.DateTimeField(default=datetime.datetime.now)
     user = models.CharField(max_length=50, null=False , default='')
