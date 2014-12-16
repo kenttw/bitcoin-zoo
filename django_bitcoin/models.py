@@ -270,11 +270,15 @@ def process_outgoing_transactions():
 
 class BitcoinAddress(models.Model):
     address = models.CharField(max_length=50, unique=True)
-    pkey1 = models.CharField(max_length=50)
-    pkey2 = models.CharField(max_length=50)
-    pkey3 = models.CharField(max_length=50)
+    
+# TODO: store kyc private , but user key(key4) may not be saved in our database 
+    pkey1 = models.CharField(max_length=50 , null=False)
+    pkey2 = models.CharField(max_length=50 , null=False)
+    pkey3 = models.CharField(max_length=50 , null=False)
+    pkey4 = models.CharField(max_length=50 , default='') 
+
     created_at = models.DateTimeField(default=datetime.datetime.now)
-    user = models.CharField(max_length=50)
+    user = models.CharField(max_length=50, null=False , default='')
     active = models.BooleanField(default=False)
     least_received = models.DecimalField(max_digits=16, decimal_places=8, default=Decimal(0))
     least_received_confirmed = models.DecimalField(max_digits=16, decimal_places=8, default=Decimal(0))
@@ -411,6 +415,7 @@ def new_bitcoin_address():
             db_transaction.commit()
             bp = BitcoinAddress.objects.filter(Q(active=False) & Q(wallet__isnull=True) & \
                     Q(least_received__lte=0))
+            BitcoinAddress.objects.all()
             if len(bp) < 1:
                 refill_payment_queue()
                 db_transaction.commit()
@@ -1044,7 +1049,10 @@ def refill_payment_queue():
                 script = mk_multisig_script(pubs, 2, 3) # 2 0f 3 multisig script
                 tx_address = scriptaddr(script)
 #                 addrestxt = 
-                BitcoinAddress.objects.create(address = tx_address, active=False)
+                pk1 = random_keys[0]
+                pk2 = random_keys[1]
+                pk3 = random_keys[2]
+                BitcoinAddress.objects.create(address = tx_address, pkey1 = pk1 , pkey2 = pk2 , pkey3 = pk3 ,active=False)
 
 def update_payments():
     if not cache.get('last_full_check'):
