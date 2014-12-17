@@ -50,7 +50,8 @@ class Command(NoArgsCommand):
                     last_check_time = int(t['time'])
             print "done listtransactions checking, starting checking least_received>least_received_confirmed", time() - start_time
             for ba in BitcoinAddress.objects.filter(active=True,
-                wallet__isnull=False).extra(where=["least_received>least_received_confirmed"]).order_by("?")[:5]:
+                wallet__isnull=False):
+# TODO: replace bitcoind to use bitcoin tool then get last recive amount
                 ba.query_bitcoind()
             print "done, sleeping...", time() - start_time
             sleep(1)
