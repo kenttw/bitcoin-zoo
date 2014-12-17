@@ -30,4 +30,4 @@ six==1.8.0
 South==1.0.1
 Werkzeug==0.9.4
 wsgiref==0.1.2
-openpyxl==1.8.5
+openpyxl==2.1.4
