@@ -6,6 +6,8 @@ from rest_framework.views import APIView
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -21,11 +23,10 @@ class WalletInfoView(APIView):
 #         pass
 # curl -X POST http://localhost:8000/api/wallet/ -d  '{"label":"fsdfdf"}'
 class WalletCreateView(generics.CreateAPIView):
+    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    permission_classes = (IsAuthenticated,)
     model = Wallet
     serializer_class = WalletCreateSerializer
-    permission_classes = [
-        permissions.AllowAny
-    ]
     def post(self, request, *args, **kwargs):
         return generics.CreateAPIView.post(self, request, *args, **kwargs)
 class WalletReflashAddressView(generics.RetrieveAPIView):
