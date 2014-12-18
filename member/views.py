@@ -1,7 +1,4 @@
 from django.shortcuts import render
-from userena import views
-# Create your views here.
-
 from django.contrib.auth.models import User, Group
 from django.contrib.auth import login
 from django.contrib.auth import logout
@@ -20,13 +17,17 @@ from rest_framework import renderers
 from rest_framework_jwt import utils
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication as jwt_auth
 from rest_framework_jwt.serializers import JSONWebTokenSerializer
-
+# userena
+from userena import views
 
 
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
+
+    authentication_classes = (BasicAuthentication, )
+
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -47,9 +48,16 @@ def signup(request):
 
 
 def signout(request):
-    logout(request)
+    '''
+    '''
+    return views.signout(request, template_name='home.html')
 
-    return HttpResponseRedirect('/home/')
+
+def signin(request):
+    '''
+    '''
+    # this is a little trick to hack the userena signin function
+    return views.signin(request, redirect_signin_function=lambda *arg: '/home/')
 
 
 class testSignin(APIView):
