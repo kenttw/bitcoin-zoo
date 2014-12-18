@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+from core import views
 # import django_bitcoin
 admin.autodiscover()
 

@@ -35,10 +35,11 @@
                 <div class="modal-body">
                     <!-- The form is placed inside the body of modal -->
                     <form action='/member/signin/' id="searchForm" method="post" class="form-horizontal">
+                        {% csrf_token %}
                         <div class="form-group">
                             <label class="col-md-3 control-label">username</label>
                             <div class="col-md-5">
-                                <input type="text" class="form-control" name="username" />
+                                <input type="text" class="form-control" name="identification" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -79,7 +80,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label">E-mail</label>
+                            <label class="col-md-3 control-label">email</label>
                             <div class="col-md-5">
                                 <input type="text" class="form-control" name="email" />
                             </div>
