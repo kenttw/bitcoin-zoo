@@ -38,7 +38,7 @@ class BitcoinAddressSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('address', 'created_at', 'active', 'least_received')
 
 # ViewSets define the view behavior.
-class BitcoinAddressViewSet(viewsets.ModelViewSet):
+class BitcoinAddressViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = BitcoinAddress.objects.all()
     serializer_class = BitcoinAddressSerializer
     
