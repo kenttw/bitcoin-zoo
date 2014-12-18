@@ -131,14 +131,12 @@ INSTALLED_APPS = (
     'django_bitcoin',
     'rest_framework',
     'rest_framework_swagger',
-#     'userena',
-#     'guardian',
-#     'easy_thumbnails',
-#     'member',
+    'userena',
+    'guardian',
+    'easy_thumbnails',
+    'member',
     'bitcoin_api',
     'bitcoin_task',
-#     'djcelery',
-
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

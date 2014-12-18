@@ -19,8 +19,8 @@ urlpatterns = patterns(
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     # overwirtte some views of userena
-#     url(r'^member/', include('member.urls')),
-#     url(r'^member/', include('userena.urls')),
-#     url(r'^home/', views.home),
+    url(r'^member/', include('member.urls')),
+    url(r'^member/', include('userena.urls')),
+    url(r'^home/', views.home),
 
 )
