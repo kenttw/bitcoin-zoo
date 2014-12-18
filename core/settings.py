@@ -124,12 +124,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'django_extensions',
     'south',
     'django_bitcoin',
     'rest_framework',
+    'rest_framework.authtoken' ,
     'rest_framework_swagger',
     'userena',
     'guardian',
@@ -137,8 +137,6 @@ INSTALLED_APPS = (
     'member',
     'bitcoin_api',
     'bitcoin_task',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -202,11 +200,6 @@ EMAIL_HOST_PASSWORD = ''
 
 
 REST_FRAMEWORK = {
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-#     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
