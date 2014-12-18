@@ -196,18 +196,10 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 
-
-
-
 REST_FRAMEWORK = {
-<<<<<<< HEAD
-=======
-    # Use Django's standard `django.contrib.auth` permissions,
-    # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
+    'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ],
->>>>>>> f797be632c51094589a541f30e013cc76a0464d7
+    ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
