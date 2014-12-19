@@ -24,3 +24,9 @@ python manage.py check_permissions
 celery worker -A core -B --loglevel=INFO
 
 ```
+
+## How to Debug Celery
+
+modify /bitcoin-zoo/core/celeryconfig.py 
+
+```CELERY_ALWAYS_EAGER = True
