@@ -20,7 +20,9 @@ python manage.py check_permissions
 ### go into the bitcoin-zoo directory
 ### just enter the command :)
 ```
-celery worker -A core -B --loglevel=INFO
+celery worker -A core -B --loglevel=INFO 
+or 
+python manage.py celery beat
 ```
 
 ## How to Debug Celery
