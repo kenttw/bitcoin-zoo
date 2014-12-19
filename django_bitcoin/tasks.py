@@ -7,25 +7,24 @@ import base64
 from decimal import Decimal
 
 from django.db import models
-
 from django_bitcoin.utils import bitcoind
 from django_bitcoin import settings
-
 from django.utils.translation import ugettext as _
 from django_bitcoin.models import DepositTransaction, BitcoinAddress
+from django.db import transaction as db_transaction
+from django.core.cache import cache
+from django.core.mail import mail_admins
 
 import django.dispatch
 
 import jsonrpc
-
 from BCAddressField import is_valid_btc_address
 
-from django.db import transaction as db_transaction
 from celery import task
-from distributedlock import distributedlock, MemcachedLock, LockNotAcquiredError
-from django.core.cache import cache
+from celery import shared_task
 
-from django.core.mail import mail_admins
+from distributedlock import distributedlock, MemcachedLock, LockNotAcquiredError
+
 
 def NonBlockingCacheLock(key, lock=None, blocking=False, timeout=10000):
     if lock is None:
@@ -33,7 +32,8 @@ def NonBlockingCacheLock(key, lock=None, blocking=False, timeout=10000):
 
     return distributedlock(key, lock, blocking)
 
-@task()
+
+@shared_task
 def query_transactions():
     with NonBlockingCacheLock("query_transactions_ongoing"):
         blockcount = bitcoind.bitcoind_api.getblockcount()
@@ -85,7 +85,7 @@ def query_transactions():
 import sys
 from cStringIO import StringIO
 
-@task()
+@shared_task
 def check_integrity():
     from django_bitcoin.models import Wallet, BitcoinAddress, WalletTransaction, DepositTransaction
     from django_bitcoin.utils import bitcoind

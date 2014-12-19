@@ -17,7 +17,7 @@ import pytz
 from decimal import Decimal
 
 from django.db import models
-from django.contrib.sites.models import Site 
+from django.contrib.sites.models import Site
 from django.contrib.auth.models import User
 # from django.db import models
 from django.db.models import ForeignKey , BooleanField , CharField
@@ -36,15 +36,16 @@ from bitcoin import random_key , privtopub , mk_multisig_script ,scriptaddr
 from BCAddressField import is_valid_btc_address
 
 from django.db import transaction as db_transaction
-from celery import task
 from distributedlock import distributedlock, MemcachedLock, LockNotAcquiredError
-from django.db.models import Avg, Max, Min, Sum 
+from django.db.models import Avg, Max, Min, Sum
+from celery import task
 
 def CacheLock(key, lock=None, blocking=True, timeout=10000):
     if lock is None:
         lock = MemcachedLock(key=key, client=cache, timeout=timeout)
 
     return distributedlock(key, lock, blocking)
+
 
 def NonBlockingCacheLock(key, lock=None, blocking=False, timeout=10000):
     if lock is None:
@@ -129,6 +130,8 @@ class OutgoingTransaction(models.Model):
 
     def __unicode__(self):
         return unicode(self.created_at) + ": " + self.to_bitcoinaddress + u", " + unicode(self.amount)
+
+
 
 @task()
 def update_wallet_balance(wallet_id):
@@ -270,12 +273,12 @@ def process_outgoing_transactions():
 
 class BitcoinAddress(models.Model):
     address = models.CharField(max_length=50, unique=True)
-    
-# TODO: store kyc private , but user key(key4) may not be saved in our database 
+
+# TODO: store kyc private , but user key(key4) may not be saved in our database
     pkey1 = models.CharField(max_length=50 , null=False)
     pkey2 = models.CharField(max_length=50 , null=False)
     pkey3 = models.CharField(max_length=50 , null=False)
-#     pkey4 = models.CharField(max_length=50 , default='') 
+#     pkey4 = models.CharField(max_length=50 , default='')
 
     created_at = models.DateTimeField(default=datetime.datetime.now)
     user = models.CharField(max_length=50, null=False , default='')
@@ -992,7 +995,7 @@ class Wallet(models.Model):
 # class Profile(models.Model):
 #     wallet = ForeignKey(Wallet)
 #     outgoing_bitcoin_address = CharField(max_length=255)
-# 
+#
 # class Escrow(models.Model):
 #     wallet = ForeignKey(Wallet)
 #     buyer_happy = BooleanField(default=False)
@@ -1048,7 +1051,7 @@ def refill_payment_queue():
                 # addrs = [ pubtoaddr(pub) for pub in pubs ]
                 script = mk_multisig_script(pubs, 2, 3) # 2 0f 3 multisig script
                 tx_address = scriptaddr(script)
-#                 addrestxt = 
+#                 addrestxt =
                 pk1 = random_keys[0]
                 pk2 = random_keys[1]
                 pk3 = random_keys[2]
