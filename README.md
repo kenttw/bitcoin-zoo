@@ -5,7 +5,7 @@
 ```sh
 sudo apt-get update
 sudo apt-get install build-essential python-dev libmysqlclient-dev
-sudo pip install -r requirement.txt
+sudo pip install -r requirements.txt
 python manage.py  schemamigration django_bitcoin --initial
 python manage.py syncdb
 python manage.py migrate
