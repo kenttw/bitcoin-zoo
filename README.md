@@ -3,6 +3,7 @@
 ## How to Install
 
 ```sh
+sudo apt-get update
 sudo apt-get install build-essential python-dev libmysqlclient-dev
 sudo pip install -r requirement.txt
 python manage.py  schemamigration django_bitcoin --initial
