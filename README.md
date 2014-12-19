@@ -26,5 +26,5 @@ celery worker -A core -B --loglevel=INFO
 ## How to Debug Celery
 ```
 modify /bitcoin-zoo/core/celeryconfig.py 
+CELERY_ALWAYS_EAGER = True
 ```
-```CELERY_ALWAYS_EAGER = True
