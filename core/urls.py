@@ -19,6 +19,7 @@ urlpatterns = patterns(
     url(r'^api/', include('bitcoin_api.urls')),
     url(r'^docs/', include('rest_framework_swagger.urls')),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', 'rest_framework_jwt.views.obtain_jwt_token'),
     # overwirtte some views of userena
     url(r'^member/', include('member.urls')),
     url(r'^member/', include('userena.urls')),
