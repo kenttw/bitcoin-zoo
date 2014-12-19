@@ -1,5 +1,7 @@
 BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+# In Debug Mode this value be setting true 
+CELERY_ALWAYS_EAGER = True
 
 
 #celery setting
@@ -11,7 +13,7 @@ CELERYBEAT_SCHEDULE = {
 #         'schedule': timedelta(seconds=10),
 #         'args': (16, 16)
 #     },
-    'syncaddress-every-1-seconds': {
+    'query_transactions': {
         'task': 'django_bitcoin.tasks.query_transactions',
         'schedule': timedelta(seconds=10),
 #         'args': (16, 16)
