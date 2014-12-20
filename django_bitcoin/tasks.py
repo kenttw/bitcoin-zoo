@@ -39,7 +39,9 @@ def sync_alladdress_balance():
     for address in adrlist :
         address_text = address.address
         balance = bci.unspent(address_text)[0]['value']
-        address.update(least_received_confirmed=balance)
+        address.least_received_confirmed = balance
+        address.save()
+        
 
 @shared_task
 def query_transactions():
