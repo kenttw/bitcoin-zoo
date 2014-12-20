@@ -996,9 +996,9 @@ class Wallet(models.Model):
 #     wallet = ForeignKey(Wallet)
 #     outgoing_bitcoin_address = CharField(max_length=255)
 #
-# class Escrow(models.Model):
-#     wallet = ForeignKey(Wallet)
-#     buyer_happy = BooleanField(default=False)
+class Escrow(models.Model):
+    wallet = ForeignKey(Wallet)
+    buyer_happy = BooleanField(default=False)
 
 
 # class FiatWalletTransaction(models.Model):
