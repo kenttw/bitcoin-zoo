@@ -35,6 +35,9 @@ def NonBlockingCacheLock(key, lock=None, blocking=False, timeout=10000):
 
 @shared_task
 def sync_alladdress_balance():
+    
+# TODO: sync_alladdress_balance - use transation lock
+# TODO: sync_alladdress_balance - performance enhancement
     adrlist = models.BitcoinAddress.objects.all()
     for address in adrlist :
         address_text = address.address
