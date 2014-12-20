@@ -8,7 +8,7 @@ from decimal import Decimal
 
 from django.db import models
 from django_bitcoin.utils import bitcoind
-from django_bitcoin import settings
+from django_bitcoin import settings , models
 from django.utils.translation import ugettext as _
 from django_bitcoin.models import DepositTransaction, BitcoinAddress
 from django.db import transaction as db_transaction
@@ -18,12 +18,13 @@ from django.core.mail import mail_admins
 import django.dispatch
 
 import jsonrpc
+from  bitcoin import bci
 from BCAddressField import is_valid_btc_address
 
-from celery import task
 from celery import shared_task
 
 from distributedlock import distributedlock, MemcachedLock, LockNotAcquiredError
+
 
 
 def NonBlockingCacheLock(key, lock=None, blocking=False, timeout=10000):
@@ -32,9 +33,18 @@ def NonBlockingCacheLock(key, lock=None, blocking=False, timeout=10000):
 
     return distributedlock(key, lock, blocking)
 
+@shared_task
+def sync_alladdress_balance():
+    adrlist = models.BitcoinAddress.objects.all()
+    for address in adrlist :
+        address_text = address.address
+        balance = bci.unspent(address_text)[0]['value']
+        address.update(least_received_confirmed=balance)
 
 @shared_task
 def query_transactions():
+#     rdb.set_trace()  # <- set breakpoint
+
     with NonBlockingCacheLock("query_transactions_ongoing"):
         blockcount = bitcoind.bitcoind_api.getblockcount()
         max_query_block = blockcount - settings.BITCOIN_MINIMUM_CONFIRMATIONS - 1
