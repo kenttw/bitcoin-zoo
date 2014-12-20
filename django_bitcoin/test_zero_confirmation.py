@@ -1,17 +1,19 @@
-from django.core.management import setup_environ
+# from django.core.management import setup_environ
 import settings
-setup_environ(settings)
+import os
+# setup_environ(settings)
 
 # Tests only with internal transf
 from decimal import Decimal
 import unittest
 from django_bitcoin import Wallet
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
 
 class InternalChangesTest(unittest.TestCase):
     def setUp(self):
-        self.origin = Wallet.objects.all()[0]
-
+#         self.origin = Wallet.objects.all()[0]
+        self.origin = Wallet.objects.create()
         self.w1 = Wallet.objects.create()
         self.w2 = Wallet.objects.create()
         self.w3 = Wallet.objects.create()
