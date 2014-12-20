@@ -17,16 +17,16 @@ python manage.py check_permissions
 ```
 
 ## How to run celery tasks
-
-```sh
-# go into the bitcoin-zoo directory
-# just enter the command :)
-celery worker -A core -B --loglevel=INFO
-
+### go into the bitcoin-zoo directory
+### just enter the command :)
+```
+celery worker -A core -B --loglevel=INFO 
+or 
+python manage.py celery beat
 ```
 
 ## How to Debug Celery
-
+```
 modify /bitcoin-zoo/core/celeryconfig.py 
-
-```CELERY_ALWAYS_EAGER = True
+CELERY_ALWAYS_EAGER = True
+```
