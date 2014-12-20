@@ -18,8 +18,8 @@ python manage.py check_permissions
 
 ## How to run celery tasks
 
-# go into the bitcoin-zoo directory
-# just enter the command :)
+go into the bitcoin-zoo directory
+just enter the command :)
 
 ```
 celery worker -A core -B --loglevel=INFO
@@ -37,9 +37,7 @@ CELERY_ALWAYS_EAGER = True
 
 ```
 python manage.py test
-
 or 
-
 Use PyDev Django Unit Testing
 
 ```
