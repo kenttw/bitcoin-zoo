@@ -45,6 +45,8 @@ BITCOIN_TRANSACTION_SIGNALING = getattr(
     settings,
     "BITCOIN_TRANSACTION_SIGNALING",
     False)
+
+# allow user can send bitcoin to outside address
 BITCOIN_DISABLE_OUTGOING = getattr(
     settings,
     "BITCOIN_DISABLE_OUTGOING",

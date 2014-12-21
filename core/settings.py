@@ -169,8 +169,7 @@ LOGGING = {
     }
 }
 
-# Don't try to do asynchronous transaction processing
-CELERY_ALWAYS_EAGER = True
+
 
 
 # adds for userena
