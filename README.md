@@ -41,3 +41,6 @@ or
 Use PyDev Django Unit Testing
 
 ```
+
+## bitcoin zoo er digram
+![image](./er_digram.png)

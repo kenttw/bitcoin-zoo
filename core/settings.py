@@ -225,7 +225,11 @@ JWT_AUTH = {
 }
 
 
-
+# for ER Digram Generator
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
+}
 
 
 # Disable some nagging

@@ -1009,33 +1009,33 @@ class Escrow(models.Model):
 #     """Wallet for storing fiat currencies"""
 #     pass
 
-# class BitcoinEscrow(models.Model):
-#     """Bitcoin escrow payment"""
-
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-#     seller = models.ForeignKey(User)
-
-#     bitcoin_payment = models.ForeignKey(Payment)
-
-#     confirm_hash = models.CharField(max_length=50, blank=True)
-
-#     buyer_address = models.TextField()
-#     buyer_phone = models.CharField(max_length=20, blank=True)
-#     buyer_email = models.EmailField(max_length=75)
-
-#     def save(self, **kwargs):
-#         super(BitcoinEscrow, self).save(**kwargs)
-#         if not self.confirm_hash:
-#             self.confirm_hash=generateuniquehash(
-#                 length=32,
-#                 extradata=str(self.id))
-#             super(BitcoinEscrow, self).save(**kwargs)
-
-#     @models.permalink
-#     def get_absolute_url(self):
-#         return ('view_or_url_name',)
+class BitcoinEscrow(models.Model):
+    """Bitcoin escrow payment"""
+ 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+ 
+    seller = models.ForeignKey(User)
+ 
+    bitcoin_payment = models.ForeignKey(Payment)
+ 
+    confirm_hash = models.CharField(max_length=50, blank=True)
+ 
+    buyer_address = models.TextField()
+    buyer_phone = models.CharField(max_length=20, blank=True)
+    buyer_email = models.EmailField(max_length=75)
+ 
+    def save(self, **kwargs):
+        super(BitcoinEscrow, self).save(**kwargs)
+        if not self.confirm_hash:
+            self.confirm_hash=generateuniquehash(
+                length=32,
+                extradata=str(self.id))
+            super(BitcoinEscrow, self).save(**kwargs)
+  
+    @models.permalink
+    def get_absolute_url(self):
+        return ('view_or_url_name',)
 
 # TODO: 改採用 bitcointool ,並使用 Multi Key 的機制
 def refill_payment_queue():
