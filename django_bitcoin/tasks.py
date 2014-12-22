@@ -41,9 +41,12 @@ def sync_alladdress_balance():
     adrlist = models.BitcoinAddress.objects.all()
     for address in adrlist :
         address_text = address.address
-        balance = bci.unspent(address_text)[0]['value']
-        address.least_received_confirmed = balance
-        address.save()
+        balance = bci.unspent(address_text)
+        if len(balance) > 0 : 
+            address.least_received_confirmed = balance[0]['value']
+            address.save()
+        
+
         
 
 @shared_task
