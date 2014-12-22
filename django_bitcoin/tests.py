@@ -19,6 +19,8 @@ class BasicTest(TestCase):
     def setUp(self):
         self.w1 = Wallet.objects.create(label='test wallet')
         self.w1.save()
+        self.w1.receiving_address()
+
         
     def test_pytool_unspent(self):
         # 3CVVtR2coaLqBbav3XcP8VdekR4CvdtYCg is kent's personal bitcoin address . you are welcome send you bicoin to this address !!
@@ -32,3 +34,8 @@ class BasicTest(TestCase):
         
     def test_sync_alladdress_balance(self):
         tasks.sync_alladdress_balance()
+        
+    def test_address_getbalance(self):
+        ads = BitcoinAddress.objects.filter(wallet=self.w1)
+        for ad in ads :
+            print ad.getunspent()

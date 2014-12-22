@@ -34,7 +34,7 @@ class Command(NoArgsCommand):
                         try:
                             ba = BitcoinAddress.objects.get(address=t['address'], active=True, wallet__isnull=False)
                             
-                            newdep = DepositTransaction(wallet=ba.wallet , address=ba,amount=Decimal(str(t[u'amount'])))
+                            newdep = DepositTransaction(wallet=ba.wallet , address=ba,amount=Decimal(str(t[u'amount'])), txid=t[u'txid'])
                             newdep.save()
                             if ba:
                                 ba.query_bitcoind(0, triggered_tx=t[u'txid'])

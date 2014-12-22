@@ -17,9 +17,9 @@ CELERYBEAT_SCHEDULE = {
         'task': 'django_bitcoin.tasks.sync_alladdress_balance',
         'schedule': timedelta(seconds=10),
     },
-    'check_integrity': {
-        'task': 'django_bitcoin.tasks.check_integrity',
-        'schedule': timedelta(seconds=10),
-    },        
+#     'check_integrity': {
+#         'task': 'django_bitcoin.tasks.check_integrity',
+#         'schedule': timedelta(seconds=10),
+#     },        
 
 }
