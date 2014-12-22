@@ -31,7 +31,7 @@ from django.utils.translation import ugettext as _
 import django.dispatch
 
 import jsonrpc
-from bitcoin import random_key , privtopub , mk_multisig_script ,scriptaddr
+from bitcoin import random_key , privtopub , mk_multisig_script ,scriptaddr ,bci
 
 from BCAddressField import is_valid_btc_address
 
@@ -294,11 +294,20 @@ class BitcoinAddress(models.Model):
     class Meta:
         verbose_name_plural = 'Bitcoin addresses'
 
+    def getunspent(self):
+        balance = bci.unspent(self.address)
+        if len(balance) == 0 : return 0
+        else : 
+            return balance[0]['value']
+
     def query_bitcoind(self, minconf=settings.BITCOIN_MINIMUM_CONFIRMATIONS, triggered_tx=None):
 #         raise Exception("Deprecated")
         with CacheLock('query_bitcoind'):
+            
+            # kent : use bitcoind to get all receieved balance 
             r = bitcoind.total_received(self.address, minconf=minconf)
 
+            # kent : 假如前比上一次的存款( confirmed 過的)還要多
             if r > self.least_received_confirmed and \
                 minconf >= settings.BITCOIN_MINIMUM_CONFIRMATIONS:
                 transaction_amount = r - self.least_received_confirmed
@@ -307,8 +316,10 @@ class BitcoinAddress(models.Model):
                         balance_changed_confirmed.send(sender=self.wallet,
                             changed=(transaction_amount), bitcoinaddress=self)
 
+                # kent : 確認是否有更新過 least_received , 如果沒有的話則更新 least_received
                 updated = BitcoinAddress.objects.select_for_update().filter(id=self.id, least_received_confirmed=self.least_received_confirmed).update(least_received_confirmed=r)
 
+                # kent: least_recievded 怎麼會小於 least_received_confirmed ?　，所以強制更新成 最後 confirmed 過的
                 if self.least_received < r:
                     BitcoinAddress.objects.select_for_update().filter(id=self.id,
                         least_received=self.least_received).update(least_received=r)
@@ -329,7 +340,7 @@ class BitcoinAddress(models.Model):
                         confirmed_dps.append(dp.id)
                     if self.migrated_to_transactions and updated:
                         wt = WalletTransaction.objects.create(to_wallet=self.wallet, amount=transaction_amount, description=self.address,
-                            deposit_address=self, deposit_transaction=deposit_tx)
+                            deposit_address=self) # ,deposit_transaction=deposit_tx)
                         DepositTransaction.objects.select_for_update().filter(address=self, wallet=self.wallet,
                             id__in=confirmed_dps, transaction=None).update(transaction=wt)
                     update_wallet_balance.delay(self.wallet.id)
