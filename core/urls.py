@@ -15,7 +15,7 @@ urlpatterns = patterns(
     '',
     # Examples:
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^', include(admin.site.urls)),
+#     url(r'^', include(admin.site.urls)),
     url(r'^bitcoin/', include('django_bitcoin.urls')),
     url(r'^api/', include('bitcoin_api.urls')),
     url(r'^docs/', include('rest_framework_swagger.urls')),
