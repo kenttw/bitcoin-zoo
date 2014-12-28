@@ -12,7 +12,9 @@ from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 class WalletInfoView(APIView):
-    
+    permission_classes = [
+        permissions.AllowAny
+    ]    
     def get(self, request, pk):
         wallet = Wallet.objects.get(id=pk)
         serializer = WalletSerializer(wallet)
